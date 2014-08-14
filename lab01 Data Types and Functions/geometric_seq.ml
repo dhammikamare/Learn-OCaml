@@ -1,4 +1,7 @@
-(* Write functions to calculate nth term of a geometric sequence ar^n and the sum of the first n terms *)
+(* Task : Write functions to calculate nth term of a geometric sequence ar^n and the sum of the first n terms
+ *
+ * Author : Dhammika Marasinghe | https://github.com/dhammika-marasinghe
+ *)
 
 let geometric_seq_term (a:float) (r:float) (n:int) :float = 
 	let r_n = r ** float_of_int(n) in 

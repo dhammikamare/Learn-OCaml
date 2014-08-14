@@ -1,5 +1,8 @@
-(* Define the function rotate x y theta that rotates a cartesian point (x, y) about the origin by angle theta.
- * To construct a pair of values as the result enclose them in parentheses, e.g. (x,y).*)
+(* Task : Define the function rotate x y theta that rotates a cartesian point (x, y) about the origin by angle theta.
+ * To construct a pair of values as the result enclose them in parentheses, e.g. (x,y). 
+ *
+ * Author : Dhammika Marasinghe | https://github.com/dhammika-marasinghe
+ *)
 
 let rotate (x:float) (y:float) (theta:float) = 
 	let pi = 22. /. 7. in
