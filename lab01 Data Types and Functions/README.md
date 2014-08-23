@@ -67,8 +67,5 @@ let rotate (x:float) (y:float) (theta:float) =
 	(new_x, new_y);;
 ```
 *Note:*
-<<<<<<< HEAD
-Questions were extracted from CO225 Lab 1 (2014 fall) by Mr. Ziyan Maraikar 
-=======
-Questions were extracted from CO225 Lab 1 (2014 fall) by Mr. Ziyan Maraikar 
->>>>>>> origin/master
+
+Questions were extracted from CO225 Lab 1 (2014 fall) by Mr. Ziyan Maraikar
