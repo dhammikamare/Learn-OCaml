@@ -1,4 +1,5 @@
-(* Task : Write functions to calculate nth term of a geometric sequence ar^n and the sum of the first n terms
+(* Task : Write functions to calculate nth term of a geometric sequence ar^n and 
+ * the sum of the first n terms
  *
  * Author : Dhammika Marasinghe | https://github.com/dhammika-marasinghe
  *)

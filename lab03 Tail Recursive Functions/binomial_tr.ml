@@ -6,11 +6,10 @@
 (* Tail recursive binomial coefficient. *)
 (* Invariant:  *)	
 let binomial_tr (n:int) (k:int) :int = 
-	let rec loop (i:int) (a:int) :int = 
-		if 
+	let rec loop (i:int) (j:int) (a:int) :int = 
+		if j = 0 || j = n then a
+		else loop (i-1) (j-1) (i/j)*a in
+	loop n k 1;;
 
-		
-(* Non Tail recursive binomial coefficient. *)
-let rec binomial_coeff (n:int) (k:int) :int = 
-	if k=0 || k=n then 1
-	else binomial_coeff (n-1) (k-1) + binomial_coeff (n-1) (k);;
+(* test *)
+binomial_coeff 5 3;;

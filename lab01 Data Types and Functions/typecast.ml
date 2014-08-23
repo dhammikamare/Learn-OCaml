@@ -7,11 +7,7 @@
 
 int_of_float(1.1) + 2*3;;
 
-true &amp;&amp; bool_of_float(0.0);;
-
-true &amp;&amp; bool_of_double(0.0);;
-
-(* there is no way to cast numbers to bool*)
+(* there is no way to cast numbers to bool in OCaml*)
 
 "Hello I am" ^ string_of_int(80) ^ "years old";;
 
