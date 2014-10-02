@@ -3,8 +3,17 @@
 Define a higher order function to compute the numerical derivative of a function f at point x.
 ```ocaml
 let derivative fx x dx = 
-	(* your code here... *)
+	(fx (x+.dx) -. fx x) /. dx ;;
 ```
+
+But functional languages like OCaml support to write these functions in more abstract way. 
+The following function returns a derivative function of any given function. Not the evaluated result.
+```ocaml
+let derivative fx =
+	let dx = 0.001 in
+	fun x -> (fx (x+.dx) -. fx x) /. dx ;;
+```
+
 The Trapezoid rule is a numerical method for calculating definite integrals.
 Write a higher order function to calculate integral using this formula (Hint: you may use series_sum.)
 

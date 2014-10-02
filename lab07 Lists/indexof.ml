@@ -11,7 +11,12 @@ type 'a option =
 	| None;;
 
 let index_of l x =
-	(* your code here... *)
+	let rec loop i tl = 
+		match tl with
+			| [] -> None
+			| hd::tl -> if hd = x then Some i
+						else loop (i+1) tl in
+	loop 0 l;;
 
 (* test *)
 let num = [1; 2 ; 3; 1];;

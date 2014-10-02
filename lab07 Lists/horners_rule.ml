@@ -7,7 +7,9 @@
  *)
 
 let rec horners l t = 
-	(* your code here... *)
+	match l with
+		| [] ->  0.
+		| hd::tl -> hd +. t *.(horners tl t);;
 
 (* test *)
 let coeff = [1.; 2. ; 3.; 1.];;

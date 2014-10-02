@@ -17,14 +17,21 @@ type 'a option =
 ```	
 ```ocaml
 let index_of l x =
-	(* your code here... *)
+	let rec loop i tl = 
+		match tl with
+			| [] -> None
+			| hd::tl -> if hd = x then Some i
+						else loop (i+1) tl in
+	loop 0 l;;
 ```
 We can represent a polynomial a0 + a1*x + . . . + an*x^n as a list of floating point coefficients [a0 ; a1 ; . . . ; an ].
 Write a function to evaluate the polynomial at x = t, using Horner’s rule,
 a0 + t(a1 + t(. . . + t(an ) . . .)
 ```ocaml
 let rec horners l t = 
-	(* your code here... *)
+	match l with
+		| [] ->  0.
+		| hd::tl -> hd +. t *.(horners tl t);;
 ```
 
 *Note:*
