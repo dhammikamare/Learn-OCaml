@@ -27,7 +27,13 @@ Each node in the tree represents an HTML element such as < head>, < body>, and <
 • a tag such as < h1> and optionally some text. The tags < head>, < title>, < body>, < h1> and < p> should be supported.
 • zero or more children (the DOM is a multiway tree.)
 ```ocaml
-type htmltag = Head | Title | Body | H1 | P ;;
+type htmltag = 
+	| Html
+	| Head 
+	| Title 
+	| Body 
+	| H1 
+	| P ;;
 
 type domtree = Node of htmltag * domtree list ;;
 
@@ -48,7 +54,26 @@ let rec count_tag (dtr:domtree) (t:htmltag) :int =
 ```
 (c) Define the operation dom_tostring that takes a domtree and returns its string representation.
 ```ocaml
-(* your code here... *)
+let string_of_htmltag (tag:htmltag) :string = 
+	match tag with
+		| Html -> "html"
+		| Head -> "head"
+		| Title -> "title"
+		| Body -> "body"
+		| H1 -> "h1"
+		| P -> "p"
+		| _ -> "" ;;
+	
+let rec dom_tostring (dtr:domtree) :string =
+	
+	let rec list_tostring (l:domtree list) :string = 
+		match l with 
+			| [] -> ""
+			| hd::tl -> (dom_tostring hd) ^ (list_tostring tl) in
+			
+	let Node(v,l) = dtr in
+	let s = string_of_htmltag v in
+	"<" ^ s ^ ">" ^ (list_tostring l) ^ "</" ^ s ^ ">";;
 ```
 3) An order statistics tree is a BST that supports two additional operations
 	i. rank x returns the number of keys that are less than or equal to x.
