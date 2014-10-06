@@ -131,7 +131,17 @@ let rec rank (x:int) (t:'a ostree) :int =
 					else (1 + rank x rt);;
 ```
 ```ocaml
-(* your code here... *)
+let rec select (k:int) (t:'a ostree) = 
+	match t with
+		| Empty -> failwith "error: empty list."
+		| Node(v, count, lt, rt) -> 
+			let leftcount = 
+				if lt = Empty then 0
+				else (let Node(lv, lcount, llt, lrt) = lt in lcount) in
+				
+			if k <= leftcount then (select k lt)
+			else if k = leftcount + 1 then Node(v, count, lt, rt)
+			else (select (k-leftcount-1) rt) ;;
 ```
 *Note:*
 Questions were extracted from CO225 Lab 10 (2014 fall) by Mr. Ziyan Maraikar 
