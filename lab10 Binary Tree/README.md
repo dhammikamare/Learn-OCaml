@@ -27,11 +27,24 @@ Each node in the tree represents an HTML element such as < head>, < body>, and <
 • a tag such as < h1> and optionally some text. The tags < head>, < title>, < body>, < h1> and < p> should be supported.
 • zero or more children (the DOM is a multiway tree.)
 ```ocaml
-(* your code here... *)
+type htmltag = Head | Title | Body | H1 | P ;;
+
+type domtree = Node of htmltag * domtree list ;;
+
 ```
 (b) Define the operation count_tag t which counts the number of occurrences of tag t in the tree.
 ```ocaml
-(* your code here... *)
+let rec count_tag (dtr:domtree) (t:htmltag) :int = 
+
+	let rec countlist (l:domtree list) :int = 
+		match l with 
+			| [] -> 0
+			| hd::tl -> (count_tag hd t) + (countlist tl) in
+			
+	let Node(v,l) = dtr in
+	
+	if v = t then 1 + (countlist l) 
+	else countlist l ;;
 ```
 (c) Define the operation dom_tostring that takes a domtree and returns its string representation.
 ```ocaml
