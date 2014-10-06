@@ -5,17 +5,15 @@
  * Author : Dhammika Marasinghe | https://github.com/dhammika-marasinghe
  *)
 
-let rec series_sum term n = 
-	if n = 1 then term
-	else term +. series_sum term (n-1);;
+let trapezoid fx a b n =
+	let h = (b-.a)/.n in
+	
+	let rec series_sum tn =
+		if tn > b then 0.
+		else 
+			let tnp1 = tn +. h in
+			fx tn +. fx tnp1 +. series_sum tnp1 in
 
-let trapezoid fx a b n = 
-	(* your code here... *)
+    (h /. 2.) *. (series_sum a) ;;
 
-trapezoid (fun x -> x*.x +. 2.0*.x) 0. 10. 1.
-
-
-
-
-
-
+trapezoid (fun x -> x *. x) 0. 2. 200.  ;;

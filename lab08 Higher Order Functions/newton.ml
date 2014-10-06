@@ -7,5 +7,20 @@
  * Author : Dhammika Marasinghe | https://github.com/dhammika-marasinghe
  *)
 
- let rec newton fx x0 e = 
-	(* your code here... *)
+let derivative fx =
+	let dx = 0.001 in
+	fun x -> (fx (x+.dx) -. fx x) /. dx ;;
+	
+let abs x = 
+	if x < 0. then -.x
+	else x;;
+ 
+let newton f x0 e = 
+	let rec loop xn = 
+		let xnp1 = xn -. (f xn /. (derivative f) xn) in
+		let error = abs (xnp1 -. xn) in
+		
+		if error < e then xn
+		else loop xnp1 in
+
+	loop x0 ;;
