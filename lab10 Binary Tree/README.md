@@ -35,7 +35,9 @@ type htmltag =
 	| H1 
 	| P ;;
 
-type domtree = Node of htmltag * domtree list ;;
+type domtree = 
+	| Content of string
+	| Node of htmltag * domtree list ;;
 
 ```
 (b) Define the operation count_tag t which counts the number of occurrences of tag t in the tree.
@@ -47,10 +49,11 @@ let rec count_tag (dtr:domtree) (t:htmltag) :int =
 			| [] -> 0
 			| hd::tl -> (count_tag hd t) + (countlist tl) in
 			
-	let Node(v,l) = dtr in
-	
-	if v = t then 1 + (countlist l) 
-	else countlist l ;;
+	match dtr with
+		| Content(s) -> 0
+		| Node(v,l) -> 
+			if v = t then 1 + (countlist l) 
+			else countlist l ;;
 ```
 (c) Define the operation dom_tostring that takes a domtree and returns its string representation.
 ```ocaml
@@ -61,20 +64,35 @@ let string_of_htmltag (tag:htmltag) :string =
 		| Title -> "title"
 		| Body -> "body"
 		| H1 -> "h1"
-		| P -> "p"
-		| _ -> "" ;;
+		| P -> "p" ;;
 	
-let rec dom_tostring (dtr:domtree) :string =
+let rec string_of_domtree (dtr:domtree) :string =
 	
-	let rec list_tostring (l:domtree list) :string = 
+	let rec string_of_domlist (l:domtree list) :string = 
 		match l with 
 			| [] -> ""
-			| hd::tl -> (dom_tostring hd) ^ (list_tostring tl) in
+			| hd::tl -> (string_of_domtree hd) ^ (string_of_domlist tl) in
 			
-	let Node(v,l) = dtr in
-	let s = string_of_htmltag v in
-	"<" ^ s ^ ">" ^ (list_tostring l) ^ "</" ^ s ^ ">";;
+	match dtr with
+		| Content(s) -> s
+		| Node(v,l) ->
+			let stag = string_of_htmltag v in
+			"<" ^ stag ^ ">" ^ (string_of_domlist l) ^ "</" ^ stag ^ ">";;
 ```
+Here is sample domtree that you can play :)
+```ocaml
+let dt = Node(Html,
+				[Node(Title, [Content("My Web Page")]); 
+				 Node(Body, 
+					[Node(H1, [Content("Welcome !!!")]);
+					 Node(P, [Content("Hello world")]);
+					 Content("This is so coool :) ")
+					]);
+				]
+			) ;;
+```
+
+
 3) An order statistics tree is a BST that supports two additional operations
 	i. rank x returns the number of keys that are less than or equal to x.
 	ii. select k find the k-th smallest element in the tree.
