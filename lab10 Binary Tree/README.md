@@ -91,7 +91,10 @@ let dt = Node(Html,
 				]
 			) ;;
 ```
-
+This will output
+```ocaml
+<html><title>My Web Page</title><body><h1>Welcome !!!</h1><p>Hello world</p>This is so coool :) </body></html>
+```
 
 3) An order statistics tree is a BST that supports two additional operations
 	i. rank x returns the number of keys that are less than or equal to x.
