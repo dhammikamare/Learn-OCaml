@@ -59,11 +59,18 @@ let rec tr_fact (n:int) (a:int) :int =
 	else tr_fact (n-1) (n*a);;
 	
 	
+	
 let fact (n0:int) :int = 
 	let rec tr_fact (n:int) (a:int) :int = 
 		if n=0 then a
 		else tr_fact (n-1) (n*a) in 
 	tr_fact n0 1;;
+	
+let fact (n0:int) :int = 
+	let rec tr_fact (n:int) (a:int) :int = 
+		if n=n0 then a
+		else tr_fact (n+1) (n*a) in 
+	tr_fact 1 n0;;
 	
 	
 (* ################################### 2014-07-07*)
@@ -152,29 +159,115 @@ utop # det_2by2 ((1.,1.),(1.,1.));;
 - : float = 0.   
 
 
+(* ################################### 2014-07-28*)
+
+type colour = Red | Blue | Green ;;
+
+let brush = Red;;
+
+let colour_to_rgb (c:colour) = 
+	match c with
+		| Red -> (255, 0, 0)
+		| Blue -> (0, 0, 255)
+		| Green -> (0, 255, 0);;
+
+type colour = Red | Blue | Green | Black ;;
+
+(*
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a value that is not matched:
+Black
+
+never use wild cards in matching variables
+*)
+
+type element = 
+	| Circle of float*float*float (* x1 ,y1, radius *)
+	| Line of float*float*float*float (* x1,y1 x2,y2 *)
+	| Text of string*int*float*float*colour;; (* text, size, position, Colour *)
 
 
+(* ################################### 2014-08-04 Lists and Recursive types *)
+
+type list = 
+	| Cons of int * list
+	| Empty;;
+	
+let l1 = Empty;;
+
+let l2 = Cons(2, Empty);;
+
+let l3 = Cons(10, Cons(20, Empty));;
+
+let l4 = Cons(30, l3);;
+
+let rec contains (l:list) (i:int) :bool = 
+	match l with 
+		| Cons(head, tail) -> if head=i then true else contains tail i
+		| Empty -> false;;
+	
+	
+let l1 = 1 :: 2 :: 3 :: [];;
+(* val l1 : int list = [1; 2; 3] *)
+
+let l2 = [1;2;3];;
+
+let rec contains l i = 
+	match l with
+		| head::tail -> if head=i then true else contains tail i
+		| [] -> false;;
+(* val contains : 'a list -> 'a -> bool = <fun> *)
+	
+type 'a list = 
+	| Cons of 'a * 'a list
+	| Empty;;
+	
+	
+
+(* ################################### 2014-08-25 Data Structures *)
+
+type 'a binarytree = 
+	| Empty
+	| Node of 'a * 'a binarytree * 'a binarytree;;
+
+let bt = Node(	1, 
+				Node(2,
+					Node(4, Empty, Empty) , 
+					Empty) , 
+				Node(3, Empty, Empty));;
+		
+let rec preorder t = 
+	match t with
+		| Empty -> ""
+		| Node(value, left, right) -> (string_of_int value)^","^(preorder left)^(preorder right);;
+(* "1,2,4,3," *)		
+
+let rec inorder t = 
+	match t with
+		| Empty -> ""
+		| Node(value, left, right) -> (inorder left)^(string_of_int value)^","^(inorder right);;
+(* "4,2,1,3," *)
+
+let rec postorder t = 
+	match t with
+		| Empty -> ""
+		| Node(value, left, right) -> (postorder left)^(postorder right)^(string_of_int value)^",";;
+(* "4,2,3,1," *)
 
 
+(* ################################### 2014-*)
 
+let rec fold1 (f:'a->'a->'b) (e:'a) (l:'a list) :'b = 
+	match l with 
+		| [] -> e
+		| hd::tl -> f hd (fold1 f e tl);;
+			
+let l = [1;2;3];;
+fold1 (+) 0 l;;
 
+let s = ["hi";"bye"];;
+fold1 (^) "" s;;
 
+fold1 ( * ) 1 l;;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+fold (+) 0 (map (fun x -> x*x) l)
