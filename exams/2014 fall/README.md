@@ -42,8 +42,9 @@ Hint: You should NOT use string as the type of any attribute!
 type options = {ac:bool; gps:bool; stereo:bool};;
 
 type oiltype = Diesel | Petrol ;;
+type engine = {voiltype:oiltype; capacity:float};;
 
-type vehicle = {voiltype:oiltype; feature:options};;
+type vehicle = {vengine:engine; feature:options};;
 ```
 
 Write a function full_option that takes a list of models and counts how many of the models have all 3 options.
@@ -60,6 +61,14 @@ let full_option_vehicles (vl:vehicle list) :int =
 			| hd::tl -> if (is_fulloption hd) then loop tl (count+1)
 						else loop tl count in
 	loop vl 0;;
+	
+(* OR *)
+
+let rec full_option_vehicles (vl:vehicle list) :int = 
+	match vl with
+		| [] -> 0
+		| hd::tl -> if (is_fulloption hd) then 1 + full_option_vehicles tl
+					else full_option_vehicles tl ;;
 ```
 
 *Note:*
